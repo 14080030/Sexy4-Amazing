@@ -4,7 +4,7 @@ using namespace std;
 #include "Item.h"
 
 //	初始化
-Item::Item( string No, string Name, float Price, int Count, float Discount, bool Promotion )
+Item::Item( string No, string Name, float Price, int Count, float Discount, bool Promotion, float Vipdiscount )
 {
 	no = No;
 	name = Name;
@@ -12,6 +12,7 @@ Item::Item( string No, string Name, float Price, int Count, float Discount, bool
 	count = Count;
 	discount = Discount;
 	promotion = Promotion;
+	vipdiscount = Vipdiscount;
 }
 //  获得商品编号
 string Item::getNo( ){
@@ -36,4 +37,8 @@ float &Item::getDiscount( ){
 //	获得促销
 bool &Item::getPromotion( ){
 	return promotion;
+}
+//	获得会员折扣
+float &Item::getVipdiscount( ){
+	return vipdiscount;
 }

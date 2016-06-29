@@ -6,8 +6,9 @@ class Buy{
 		string name;		//  商品名
 		float price;		//  单价
 		float discount;		//  折扣
-		int count;			//	购买数量
+		float vipdiscount;	//	会员折扣
 		bool promotion;		//	促销
+		int count;			//	购买数量
 		float val;			//	小计
 	};
 	struct node{
@@ -19,7 +20,7 @@ class Buy{
 public:
 	Buy( );
 	~Buy( );
-    void AddGoods( string No, string Name, float Price, float Discount, int Count, bool Promotion );
+    void AddGoods( string No, string Name, float Price, float Discount, int Count, bool Promotion, float Vipdiscount );
 													//	新增货品
     void RemoveGoods( string No );					//	删除货品 
     void Sum( );									//	计算货品总价和折扣

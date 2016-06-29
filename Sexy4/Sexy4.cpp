@@ -25,9 +25,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	login(s);
 	system("cls");
 	mainmenu();
-	s.Add("ITEM000000","可口可乐",3.00,5000,1,true);
-	s.Add("ITEM000001","雪碧",3.00,2000,0.8,false);
-	s.Add("ITEM000002","电池",2.00,100,1,false);
+	s.Add("ITEM000000","可口可乐",3.00,5000,1,true,1);
+	s.Add("ITEM000001","雪碧",3.00,2000,0.8,false,0.5);
+	s.Add("ITEM000002","电池",2.00,100,1,false,0.8);
 	print();
 	s.output();
 	submenu();
@@ -45,10 +45,9 @@ int _tmain(int argc, _TCHAR* argv[])
 			if(cou > s.getCount(num)) cout<<"超出剩余数量！"<<endl;
 			if(cou <= s.getCount(num) && b.search( num, cou ) == 1) s.getCount(num) = s.getCount(num) - cou;
 			if(cou <= s.getCount(num) && b.search( num, cou ) == 0){
-				b.AddGoods( num, s.getName(num),s.getPrice(num),s.getDiscount(num),cou,s.getPromotion(num));
+				b.AddGoods( num, s.getName(num),s.getPrice(num),s.getDiscount(num),cou,s.getPromotion(num),s.getVipdiscount(num));
 				s.getCount(num) = s.getCount(num) - cou;
 			}
-
 		}
 		cout<<"是否进行结算(Y结算)：";
 		cin>>chose;
@@ -79,15 +78,16 @@ void login(ItemManage S){
 }
 //	打印商品的抬头
 void print(){
-	string title[6];
+	string title[7];
 	title[0]="商品编号"; 
 	title[1]="商品名"; 
 	title[2]="单价"; 
 	title[3]="数量"; 
 	title[4]="折扣";
 	title[5]="是否促销";
-	for(int i=0;i<6;i++){
-		cout.width(14);
+	title[6]="Vip折扣";
+	for(int i=0;i<7;i++){
+		cout.width(12);
 		cout<<left<<title[i];
 	}
 	cout<<endl;

@@ -17,7 +17,7 @@ Buy::~Buy(){
 }
 
 //	新增货品
-void Buy::AddGoods( string No, string Name, float Price, float Discount,int Count, bool Promotion ){
+void Buy::AddGoods( string No, string Name, float Price, float Discount,int Count, bool Promotion, float Vipdiscount ){
 	node *p = new node;						//  创建链表节点
 	p->commodity = new Goods;
 	p->commodity->no = No;
@@ -26,6 +26,7 @@ void Buy::AddGoods( string No, string Name, float Price, float Discount,int Coun
 	p->commodity->discount = Discount;
 	p->commodity->count = Count;
 	p->commodity->promotion = Promotion;
+	p->commodity->vipdiscount = Vipdiscount;
 	p->commodity->val = 0;
 	p->next = headb;
 	headb = p;								//	插入到链表头部	
@@ -45,26 +46,41 @@ void Buy::RemoveGoods( string No ){
 	delete p;								//	释放链表节点
 	cout<<"删除成功！"<<endl;
 }
-//	获得商品名
+//	计算货品总价和折扣
 void Buy::Sum(){
 	node *p;					// 当前链表节点地址
+	float v;
+	float d;
 	for( p=headb; p!=NULL; p=p->next ) 
 	{
+		v = p->commodity->count*p->commodity->price;
 		if(p->commodity->discount!=1){
-			p->commodity->val = p->commodity->count*p->commodity->price*p->commodity->discount;
-			dis = dis + ((p->commodity->val/p->commodity->discount) - p->commodity->val);
-			value = value + p->commodity->val;
-			
+			d = v*p->commodity->discount;
+			if(p->commodity->vipdiscount == 1){
+				p->commodity->val = d;
+				dis = dis + (v-d);
+				value = value + d;
+			}
+			else{
+				p->commodity->val = d*p->commodity->vipdiscount;
+				dis = dis + (v-(d/p->commodity->vipdiscount));
+				value = value + p->commodity->val;
+			}
 		}
 		else{
-			if(p->commodity->promotion == true && p->commodity->count>=2 ){
+			if(p->commodity->promotion == true && p->commodity->count >= 2 ){
 				dis = dis + p->commodity->price;
 				p->commodity->val = p->commodity->count*p->commodity->price;
 				value = value + p->commodity->val;
 				p->commodity->count++;
 			}
-			else{
+			if(p->commodity->promotion == false && p->commodity->vipdiscount == 1){
 				p->commodity->val = p->commodity->count*p->commodity->price;
+				value = value + p->commodity->val;
+			}
+			if(p->commodity->promotion == false && p->commodity->vipdiscount != 1){
+				p->commodity->val = p->commodity->count*p->commodity->price*p->commodity->vipdiscount;
+				dis = dis + ((p->commodity->val/p->commodity->vipdiscount) - p->commodity->val);
 				value = value + p->commodity->val;
 			}
 		}
