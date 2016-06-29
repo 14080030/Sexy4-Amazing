@@ -1,0 +1,13 @@
+class Exception
+{
+ 	string  msg;		//	¥ÌŒÛ–≈œ¢
+public:
+ 	Exception( string m ) 
+	{
+ 		msg = m;		
+	}
+ 	string  Msg( )	
+	{
+ 		return  msg; 	
+	}
+};
