@@ -4,13 +4,14 @@ using namespace std;
 #include "Item.h"
 
 //	初始化
-Item::Item( string No, string Name, float Price, int Count, float Discount )
+Item::Item( string No, string Name, float Price, int Count, float Discount, bool Promotion )
 {
 	no = No;
 	name = Name;
 	price = Price;
 	count = Count;
 	discount = Discount;
+	promotion = Promotion;
 }
 //  获得商品编号
 string Item::getNo( ){
@@ -31,4 +32,8 @@ int &Item::getCount( ){
 //  获得折扣
 float &Item::getDiscount( ){
 	return discount;
+}
+//	获得促销
+bool &Item::getPromotion( ){
+	return promotion;
 }
