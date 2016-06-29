@@ -16,9 +16,13 @@ ItemManage::~ItemManage(){
 }
 
 //	新增商品
-void ItemManage::Add( string No, string Name, float Price, int Count, float Discount ){
+void ItemManage::Add( string No, string Name, float Price, int Count, float Discount, bool Promotion  ){
+	if(Discount != 1 && Promotion == true){
+		cout<<"新增失败，促销不能叠加！"<<endl;
+		return;
+	}
 	node *p = new node;						//  创建链表节点
-	p->commodity = new Item( No, Name, Price, Count, Discount);
+	p->commodity = new Item( No, Name, Price, Count, Discount, Promotion );
 	p->next = head;
 	head = p;								//	插入到链表头部	
 	/*cout<<"新增完成！\n";*/
@@ -63,7 +67,7 @@ float ItemManage::getPrice( string No){
 	return p->commodity->getPrice();
 }
 //	获得商品数量
-int ItemManage::getCount( string No ){
+int &ItemManage::getCount( string No ){
 	node *p;								// 当前链表节点地址
 	for( p=head; p!=NULL; p=p->next ) 
 	{
@@ -94,7 +98,11 @@ void ItemManage::output( ){
 	node *p;
 	for( p=head; p!=NULL; p=p->next ) 
 	{
-		cout<<setiosflags(ios::fixed)<<setprecision(2)<<setw(20)<<p->commodity->getNo()<<setw(20)<<p->commodity->getName()<<setw(20)<<p->commodity->getPrice()<<setw(20)<<p->commodity->getCount()<<endl;
+		cout<<setiosflags(ios::fixed)<<setprecision(2)<<setw(14)<<p->commodity->getNo()<<setw(14)<<p->commodity->getName()<<setw(14)<<p->commodity->getPrice()<<setw(14)<<p->commodity->getCount();
+		if(p->commodity->getDiscount()==1) cout<<setw(14)<<"不打折";
+		else cout<<(int)(p->commodity->getDiscount()*10)<<setw(13)<<"折";
+		if(p->commodity->getPromotion() == false )cout<<setw(14)<<"不促销"<<endl;
+		else cout<<setw(14)<<"买2赠1"<<endl;
 	}
 }
 //	查找商品
@@ -107,8 +115,14 @@ bool ItemManage::search( string No ){
 	}
 	if(p==NULL)	return false;
 }
-////	重载输出商品的信息，使对象输出能之间间隔等距
-//ostream& operator<<(ostream&out,Item&g){
-//	out<<setw(20)<<g.getNo()<<setw(20)<<g.getName()<<setw(20)<<g.getPrice()<<setw(20)<<g.getCount()<<endl;
-//	return out;
-//}
+//	获得促销
+bool ItemManage::getPromotion( string No ){
+	node *p;								// 当前链表节点地址
+	for( p=head; p!=NULL; p=p->next ) 
+	{
+		if( p->commodity->getNo( )== No )
+			break;							//	找到
+	}
+	if(p==NULL) throw Exception("未找到该商品！");
+	return p->commodity->getPromotion();
+}

@@ -17,7 +17,7 @@ Buy::~Buy(){
 }
 
 //	新增货品
-void Buy::AddGoods( string No, string Name, float Price, float Discount,int Count ){
+void Buy::AddGoods( string No, string Name, float Price, float Discount,int Count, bool Promotion ){
 	node *p = new node;						//  创建链表节点
 	p->commodity = new Goods;
 	p->commodity->no = No;
@@ -25,6 +25,7 @@ void Buy::AddGoods( string No, string Name, float Price, float Discount,int Coun
 	p->commodity->price = Price;
 	p->commodity->discount = Discount;
 	p->commodity->count = Count;
+	p->commodity->promotion = Promotion;
 	p->commodity->val = 0;
 	p->next = headb;
 	headb = p;								//	插入到链表头部	
@@ -51,21 +52,39 @@ void Buy::Sum(){
 	{
 		if(p->commodity->discount!=1){
 			p->commodity->val = p->commodity->count*p->commodity->price*p->commodity->discount;
-			dis = dis + ((p->commodity->val/p->commodity->discount)- p->commodity->val);
+			dis = dis + ((p->commodity->val/p->commodity->discount) - p->commodity->val);
 			value = value + p->commodity->val;
+			
 		}
 		else{
-			p->commodity->val = p->commodity->count*p->commodity->price;
-			value = value + p->commodity->val;
+			if(p->commodity->promotion == true && p->commodity->count>=2 ){
+				dis = dis + p->commodity->price;
+				p->commodity->val = p->commodity->count*p->commodity->price;
+				value = value + p->commodity->val;
+				p->commodity->count++;
+			}
+			else{
+				p->commodity->val = p->commodity->count*p->commodity->price;
+				value = value + p->commodity->val;
+			}
 		}
 	}
 }
 //	输出清单
 void Buy::outputGoods( ){
 	node *p;
+	int flag=0;
 	for( p=headb; p!=NULL; p=p->next ) 
 	{
 		cout<<setiosflags(ios::fixed)<<setprecision(2)<<"名称："<<p->commodity->name<<",数量："<<p->commodity->count<<",单价："<<p->commodity->price<<"(元)，小计："<<p->commodity->val<<"(元)"<<endl;
+		if(p->commodity->promotion == true && p->commodity->count>=2 ) flag=1;
+	}
+	if(flag == 1){
+		cout<< "----------------------"<<endl;
+		cout<< "挥泪赠送商品："<< endl;
+		for( p=headb; p!=NULL; p=p->next ) {
+			if( p->commodity->promotion == true ) cout<<"名称："<<p->commodity->name<<",数量：1"<<endl;
+		}
 	}
 }
 //	查找商品
@@ -73,14 +92,11 @@ int Buy::search( string No, int Cou ){
 	node *p;								// 当前链表节点地址
 	for( p=headb; p!=NULL; p=p->next ) {
 			if( p->commodity->no == No ){
-				if( Cou > p->commodity->count ) return 01;
-				else{
-					p->commodity->count = p->commodity->count + Cou;
-					return 11;
-				}
-		}
+				p->commodity->count = p->commodity->count + Cou;
+				return 1;
+			}
 	}
-	if(p==NULL)	return 12;
+	if(p==NULL)	return 0;
 }
 //	获取总价
 float Buy::getValue( ){
