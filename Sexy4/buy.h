@@ -2,29 +2,30 @@
 using namespace std;
 class Buy{
 	struct Goods{
-		string  no;			//  ÉÌÆ·±àºÅ
-		string name;		//  ÉÌÆ·Ãû
-		float price;		//  µ¥¼Û
-		float discount;		//  ÕÛ¿Û
-		int count;			//	¹ºÂòÊıÁ¿
-		bool promotion;		//	´ÙÏú
-		float val;			//	Ğ¡¼Æ
+		string  no;			//  å•†å“ç¼–å·
+		string name;		//  å•†å“å
+		float price;		//  å•ä»·
+		float discount;		//  æŠ˜æ‰£
+		float vipdiscount;	//	ä¼šå‘˜æŠ˜æ‰£
+		bool promotion;		//	ä¿ƒé”€
+		int count;			//	è´­ä¹°æ•°é‡
+		float val;			//	å°è®¡
 	};
 	struct node{
 		Goods*commodity;
 		node *next;
 	} *headb;
-	float value;		//	×Ü¼Û
-	float dis;			//	ÕÛ¼Û
+	float value;		//	æ€»ä»·
+	float dis;			//	æŠ˜ä»·
 public:
 	Buy( );
 	~Buy( );
-    void AddGoods( string No, string Name, float Price, float Discount, int Count, bool Promotion );
-													//	ĞÂÔö»õÆ·
-    void RemoveGoods( string No );					//	É¾³ı»õÆ· 
-    void Sum( );									//	¼ÆËã»õÆ·×Ü¼ÛºÍÕÛ¿Û
-	void outputGoods( );							//	Êä³öÇåµ¥
-	int search( string No, int Cou );				//	²éÕÒÉÌÆ·
-	float getValue( );								//	»ñÈ¡×Ü¼Û
-	float getDis( );								//	»ñÈ¡ÕÛ¿Û
+    void AddGoods( string No, string Name, float Price, float Discount, int Count, bool Promotion, float Vipdiscount );
+													//	æ–°å¢è´§å“
+    void RemoveGoods( string No );					//	åˆ é™¤è´§å“ 
+    void Sum( bool IsVip );							//	è®¡ç®—è´§å“æ€»ä»·
+	void outputGoods( );							//	è¾“å‡ºæ¸…å•
+	int search( string No, int Cou );				//	æŸ¥æ‰¾å•†å“
+	float getValue( );								//	è·å–æ€»ä»·
+	float getDis( );								//	è·å–æŠ˜æ‰£
 };
