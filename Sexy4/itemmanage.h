@@ -3,21 +3,32 @@ class ItemManage{
     struct node{
 		Item *commodity;
 		node *next;
-	} *head;									//  Á´±í±íÍ·Ö¸Õë
+	} *head;									//  é“¾è¡¨è¡¨å¤´æŒ‡é’ˆ
+	struct Goods{
+		string  no;			//  å•†å“ç¼–å·
+		string name;		//  å•†å“å
+		float price;		//  å•ä»·
+		int count;			//  æ€»æ•°
+		float discount;		//  æŠ˜æ‰£
+		bool promotion;		//	ä¿ƒé”€
+		float vipdiscount;	//	ä¼šå‘˜æŠ˜æ‰£
+	};
 	int code;
 public:
 	ItemManage( );
-	~ItemManage( );								//  ÍêÈ«Òş±ÎItem¶ÔÏó
+	~ItemManage( );								//  å®Œå…¨éšè”½Itemå¯¹è±¡
     void Add( string No, string Name, float Price, int Count, float Discount, bool Promotion, float Vipdiscount );
-												//	ĞÂÔöÉÌÆ·
-    void Remove( string No );					//	É¾³ıÉÌÆ· 
-    string getName( string No );				//	»ñµÃÉÌÆ·Ãû
-    float &getPrice( string No );				//  »ñµÃµ¥¼Û
-    int &getCount( string No );					//  »ñµÃ×ÜÊı
-    float &getDiscount( string No );			//  »ñµÃÕÛ¿Û
-	bool &getPromotion( string No );			//	»ñµÃ´ÙÏú
-	float &getVipdiscount( string No );			//	»ñµÃ»áÔ±ÕÛ¿Û
-	void output( );								//	Êä³ö¿â´æ
-	bool search( string No );					//	²éÕÒÉÌÆ·
-	int &getCode();								//	ÃÜÂë
+												//	æ–°å¢å•†å“
+    void Remove( string No );					//	åˆ é™¤å•†å“ 
+    string getName( string No );				//	è·å¾—å•†å“å
+    float &getPrice( string No );				//  è·å¾—å•ä»·
+    int &getCount( string No );					//  è·å¾—æ€»æ•°
+    float &getDiscount( string No );			//  è·å¾—æŠ˜æ‰£
+	bool &getPromotion( string No );			//	è·å¾—ä¿ƒé”€
+	float &getVipdiscount( string No );			//	è·å¾—ä¼šå‘˜æŠ˜æ‰£
+	void output( );								//	è¾“å‡ºåº“å­˜
+	bool search( string No );					//	æŸ¥æ‰¾å•†å“
+	int &getCode();								//	å¯†ç 
+	void readfile( ItemManage &I );				//	è¯»å–Goodsæ–‡æ¡£
+	void savefile( ItemManage &I );				//	ä¿å­˜Goodsæ–‡æ¡£
 };
